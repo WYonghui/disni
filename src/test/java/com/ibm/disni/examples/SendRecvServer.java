@@ -133,7 +133,7 @@ public class SendRecvServer implements RdmaEndpointFactory<SendRecvServer.Custom
 		private LinkedList<IbvSge> sgeListRecv;
 		private IbvRecvWR recvWR;
 
-		private ArrayBlockingQueue<IbvWC> wcEvents;
+		private ArrayBlockingQueue<IbvWC> wcEvents;  //数组实现的线程安全的有界的阻塞队列
 
 		public CustomServerEndpoint(RdmaActiveEndpointGroup<CustomServerEndpoint> endpointGroup,
 		                            RdmaCmId idPriv, boolean serverSide, int buffersize) throws IOException {
