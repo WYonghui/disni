@@ -36,6 +36,12 @@ import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.concurrent.ArrayBlockingQueue;
 
+
+/**
+ * DISNI Example ReadServer 服务器程序
+ * java -cp disni-1.7-jar-with-dependencies.jar:disni-1.7-tests.jar com.ibm.disni.examples.SendRecvServer -a 10.10.0.25
+ * 2.为自定义的CustomServerEndpoint 实现工厂类RdmaEndpointFactory
+ */
 public class SendRecvServer implements RdmaEndpointFactory<SendRecvServer.CustomServerEndpoint> {
 	RdmaActiveEndpointGroup<SendRecvServer.CustomServerEndpoint> endpointGroup;
 	private String host;
@@ -45,6 +51,7 @@ public class SendRecvServer implements RdmaEndpointFactory<SendRecvServer.Custom
 		return new SendRecvServer.CustomServerEndpoint(endpointGroup, idPriv, serverSide);
 	}
 
+	//3.在服务器上，分配EndPointGroup并使用工厂Factory初始化它，创建服务器端点，绑定它并接受连接
 	public void run() throws Exception {
 		//create a EndpointGroup. The RdmaActiveEndpointGroup contains CQ processing and delivers CQ event to the endpoint.dispatchCqEvent() method.
 		endpointGroup = new RdmaActiveEndpointGroup<SendRecvServer.CustomServerEndpoint>(1000, false, 128, 4, 128);
@@ -111,6 +118,9 @@ public class SendRecvServer implements RdmaEndpointFactory<SendRecvServer.Custom
 		simpleServer.launch(args);
 	}
 
+	/**
+	 * 1.通过继承RdmaActiveEndpoint来自定义您自己的Endpoint
+	 */
 	public static class CustomServerEndpoint extends RdmaActiveEndpoint {
 		private ByteBuffer buffers[];
 		private IbvMr mrlist[];
@@ -134,7 +144,7 @@ public class SendRecvServer implements RdmaEndpointFactory<SendRecvServer.Custom
 		private LinkedList<IbvSge> sgeListRecv;
 		private IbvRecvWR recvWR;
 
-		private ArrayBlockingQueue<IbvWC> wcEvents;
+		private ArrayBlockingQueue<IbvWC> wcEvents;  //数组实现的线程安全的有界的阻塞队列
 
 		public CustomServerEndpoint(RdmaActiveEndpointGroup<CustomServerEndpoint> endpointGroup, RdmaCmId idPriv, boolean serverSide) throws IOException {
 			super(endpointGroup, idPriv, serverSide);

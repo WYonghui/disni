@@ -36,6 +36,9 @@ import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.concurrent.ArrayBlockingQueue;
 
+/**
+ * java -cp disni-1.7-jar-with-dependencies.jar:disni-1.7-tests.jar com.ibm.disni.examples.ReadServer -a 10.10.0.97 -p 11919
+ */
 public class ReadServer implements RdmaEndpointFactory<ReadServer.CustomServerEndpoint> {
 	private RdmaActiveEndpointGroup<ReadServer.CustomServerEndpoint> endpointGroup;
 	private String host;

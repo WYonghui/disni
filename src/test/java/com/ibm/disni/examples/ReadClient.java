@@ -35,6 +35,9 @@ import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.concurrent.ArrayBlockingQueue;
 
+/**
+ * java -cp disni-1.7-jar-with-dependencies.jar:disni-1.7-tests.jar com.ibm.disni.examples.ReadClient -a 10.10.0.97 -p 11919
+ */
 public class ReadClient implements RdmaEndpointFactory<ReadClient.CustomClientEndpoint> {
 	private RdmaActiveEndpointGroup<ReadClient.CustomClientEndpoint> endpointGroup;
 	private String host;
@@ -92,6 +95,7 @@ public class ReadClient implements RdmaEndpointFactory<ReadClient.CustomClientEn
 
 			//we should have the content of the remote buffer in our own local buffer now
 			ByteBuffer dataBuf = endpoint.getDataBuf();
+//			System.out.println("the length of dataBuffer is " + dataBuf.asCharBuffer().length());
 			dataBuf.clear();
 			System.out.println("ReadClient::read memory from server: " + dataBuf.asCharBuffer().toString());
 			i += 10;
