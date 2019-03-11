@@ -193,7 +193,7 @@ public class WriteServer implements RdmaEndpointFactory<WriteServer.ServerEndpoi
         }
 
         @Override
-        public void dispatchCqEvent(IbvWC wc) throws IOException {
+        public void dispatchCqEvent(IbvWC wc) {
             wcList.add(wc);
         }
 

@@ -151,7 +151,7 @@ public class WriteClient implements RdmaEndpointFactory<WriteClient.ClientEndpoi
             sendWR = new IbvSendWR();
             wrList_send = new LinkedList<>();
 
-            wcList = new ArrayBlockingQueue<IbvWC>(10);
+            wcList = new ArrayBlockingQueue<>(10);
         }
 
         @Override
@@ -197,7 +197,7 @@ public class WriteClient implements RdmaEndpointFactory<WriteClient.ClientEndpoi
         }
 
         @Override
-        public void dispatchCqEvent(IbvWC wc) throws IOException {
+        public void dispatchCqEvent(IbvWC wc) {
             wcList.add(wc);
         }
 
